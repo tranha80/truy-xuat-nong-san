@@ -1,0 +1,99 @@
+<h2 class="mb-3"><i class="bi bi-shield-lock"></i> Bảng điều khiển quản trị</h2>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-3"><div class="card stat-card"><div class="num"><%= stats.products %></div><div class="label">Lô sản phẩm</div></div></div>
+  <div class="col-md-3"><div class="card stat-card"><div class="num"><%= stats.pending %></div><div class="label">Chờ duyệt</div></div></div>
+  <div class="col-md-3"><div class="card stat-card"><div class="num"><%= stats.approved %></div><div class="label">Đã duyệt</div></div></div>
+  <div class="col-md-3"><div class="card stat-card"><div class="num"><%= users.length %></div><div class="label">Người dùng</div></div></div>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-2">
+  <h4>Sản phẩm chờ duyệt</h4>
+  <div>
+    <a href="/quan-tri/nguoi-dung" class="btn btn-outline-primary btn-sm"><i class="bi bi-people"></i> Người dùng</a>
+    <a href="/quan-tri/nhat-ky" class="btn btn-outline-secondary btn-sm"><i class="bi bi-clock-history"></i> Nhật ký kiểm toán</a>
+  </div>
+</div>
+
+<% const pending = products.filter(p => p.status === 'pending'); %>
+<% if (pending.length) { %>
+  <div class="table-responsive mb-4">
+    <table class="table table-hover align-middle">
+      <thead class="table-light">
+        <tr><th>Mã lô</th><th>Sản phẩm</th><th>Nông dân</th><th>MST</th><th>GTIN</th><th></th></tr>
+      </thead>
+      <tbody>
+        <% pending.forEach(function(p){ %>
+          <tr>
+            <td><strong><%= p.batch_code %></strong></td>
+            <td><%= p.name %></td>
+            <td><%= p.farmer_name %></td>
+            <td><small><%= p.farmer_tax_code || '—' %></small></td>
+            <td><small><%= p.gtin_code || '—' %></small></td>
+            <td class="text-end">
+              <a href="/san-pham/<%= p.id %>" class="btn btn-sm btn-outline-secondary" target="_blank">Xem</a>
+              <form action="/quan-tri/san-pham/<%= p.id %>/duyet" method="post" class="d-inline">
+                <input type="hidden" name="decision" value="approved" />
+                <button class="btn btn-sm btn-success">Duyệt</button>
+              </form>
+              <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#reject-<%= p.id %>">Từ chối</button>
+
+              <div class="modal fade" id="reject-<%= p.id %>" tabindex="-1">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <form action="/quan-tri/san-pham/<%= p.id %>/duyet" method="post">
+                      <div class="modal-header"><h5 class="modal-title">Từ chối sản phẩm</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+                      <div class="modal-body">
+                        <input type="hidden" name="decision" value="rejected" />
+                        <label class="form-label">Lý do từ chối</label>
+                        <textarea name="reason" class="form-control" rows="3" required></textarea>
+                      </div>
+                      <div class="modal-footer"><button class="btn btn-danger">Xác nhận từ chối</button></div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+<% } else { %>
+  <div class="alert alert-success">✅ Không có sản phẩm nào chờ duyệt.</div>
+<% } %>
+
+<h4>Tất cả sản phẩm</h4>
+<div class="table-responsive">
+  <table class="table table-hover align-middle">
+    <thead class="table-light">
+      <tr><th>Mã lô</th><th>Sản phẩm</th><th>Nông dân</th><th>Tỉnh</th><th>Trạng thái</th><th>TTNS</th><th></th></tr>
+    </thead>
+    <tbody>
+      <% const statusMap = {draft:['secondary','Nháp'], pending:['warning','Chờ duyệt'], approved:['success','Đã duyệt'], rejected:['danger','Từ chối'], hidden:['dark','Ẩn']}; %>
+      <% products.forEach(function(p){ %>
+        <% const [sColor, sLabel] = statusMap[p.status] || ['secondary', p.status]; %>
+        <tr>
+          <td><strong><%= p.batch_code %></strong></td>
+          <td><%= p.name %></td>
+          <td><%= p.farmer_name %></td>
+          <td><%= p.province || '—' %></td>
+          <td><span class="badge bg-<%= sColor %>"><%= sLabel %></span></td>
+          <td><% if (p.ttns_registered_at) { %><i class="bi bi-check-circle-fill text-success"></i><% } else { %>—<% } %></td>
+          <td class="text-end">
+            <a href="/san-pham/<%= p.id %>" class="btn btn-sm btn-outline-secondary" target="_blank">Xem</a>
+            <% if (p.status === 'hidden') { %>
+              <form action="/quan-tri/san-pham/<%= p.id %>?_method=DELETE" method="post" class="d-inline"
+                    onsubmit="return confirm('Xoá cứng sản phẩm này? Hành động có audit log.')">
+                <button class="btn btn-sm btn-outline-danger">Xoá cứng</button>
+              </form>
+            <% } %>
+          </td>
+        </tr>
+      <% }) %>
+      <% if (!products.length) { %>
+        <tr><td colspan="7" class="text-center text-muted py-4">Chưa có sản phẩm.</td></tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>

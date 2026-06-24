@@ -1,0 +1,36 @@
+<h2 class="mb-3"><i class="bi bi-clock-history"></i> Nhật ký kiểm toán</h2>
+
+<div class="alert alert-info">
+  <i class="bi bi-shield-check"></i>
+  Mọi thao tác tạo/sửa/xoá/duyệt đều được ghi log để đảm bảo tính toàn vẹn dữ liệu truy xuất nguồn gốc (yêu cầu Thông tư 31).
+</div>
+
+<div class="table-responsive">
+  <table class="table table-sm table-hover align-middle">
+    <thead class="table-light">
+      <tr>
+        <th>Thời gian</th><th>Người thực hiện</th><th>Đối tượng</th><th>Hành động</th><th>Chi tiết</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% logs.forEach(function(l){ %>
+        <tr>
+          <td><small><%= l.created_at %></small></td>
+          <td><%= l.actor_name || '—' %></td>
+          <td><span class="badge bg-secondary"><%= l.entity_type %>#<%= l.entity_id %></span></td>
+          <td><code><%= l.action %></code></td>
+          <td>
+            <% if (l.new_data) { %>
+              <details><summary class="text-muted small">chi tiết</summary><pre class="small"><%= l.new_data %></pre></details>
+            <% } else if (l.old_data) { %>
+              <details><summary class="text-muted small">cũ</summary><pre class="small"><%= l.old_data %></pre></details>
+            <% } else { %>—<% } %>
+          </td>
+        </tr>
+      <% }) %>
+      <% if (!logs.length) { %>
+        <tr><td colspan="5" class="text-center text-muted py-4">Chưa có bản ghi nào.</td></tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>

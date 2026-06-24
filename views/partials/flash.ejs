@@ -1,0 +1,16 @@
+<% if (success_msg && success_msg.length) { %>
+  <% success_msg.forEach(function(m){ %>
+    <div class="alert alert-success alert-dismissible fade show">
+      <%= m %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+  <% }) %>
+<% } %>
+<% if (error_msg && error_msg.length) { %>
+  <% error_msg.forEach(function(m){ %>
+    <div class="alert alert-danger alert-dismissible fade show">
+      <%= m %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+  <% }) %>
+<% } %>

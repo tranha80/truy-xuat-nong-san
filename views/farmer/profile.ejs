@@ -1,0 +1,59 @@
+<h2 class="mb-3"><i class="bi bi-person-vcard"></i> Hồ sơ thương nhân</h2>
+
+<div class="alert alert-info">
+  <i class="bi bi-info-circle"></i>
+  Theo Thông tư 31/2026/TT-BCT, thương nhân cần cung cấp <strong>mã số thuế</strong> và
+  <strong>giấy phép kinh doanh</strong> để được xác thực. Chỉ tài khoản đã xác thực mới được tạo sản phẩm đăng ký TTNS.
+</div>
+
+<div class="card mb-4">
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h5 class="card-title mb-0">Thông tin tài khoản</h5>
+      <span class="badge bg-<%= profile.verification_status === 'verified' ? 'success' : (profile.verification_status === 'rejected' ? 'danger' : 'warning') %>">
+        <% if (profile.verification_status === 'verified') { %>Đã xác thực<% } else if (profile.verification_status === 'rejected') { %>Bị từ chối<% } else { %>Chờ xác thực<% } %>
+      </span>
+    </div>
+
+    <form action="/nong-dan/ho-so" method="post">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Họ và tên / Tên tổ chức</label>
+          <input type="text" name="fullName" class="form-control" value="<%= profile.full_name %>" required />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Số điện thoại</label>
+          <input type="text" name="phone" class="form-control" value="<%= profile.phone %>" />
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label">Mã số thuế <span class="text-danger">*</span></label>
+          <input type="text" name="taxCode" class="form-control" value="<%= profile.tax_code %>" placeholder="VD: 0123456789" required />
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Số giấy phép kinh doanh</label>
+          <input type="text" name="businessLicense" class="form-control" value="<%= profile.business_license %>" />
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Loại hình thương nhân</label>
+          <select name="businessType" class="form-select">
+            <% const types = {production:'Sản xuất', processing:'Chế biến', trading:'Kinh doanh', import:'Nhập khẩu'}; %>
+            <% Object.keys(types).forEach(function(t){ %>
+              <option value="<%= t %>" <%= profile.business_type === t ? 'selected' : '' %>><%= types[t] %></option>
+            <% }) %>
+          </select>
+        </div>
+
+        <div class="col-12">
+          <button class="btn btn-primary"><i class="bi bi-save"></i> Cập nhật hồ sơ</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="alert alert-warning">
+  <i class="bi bi-exclamation-triangle"></i>
+  Khi bạn thay đổi mã số thuế / giấy phép / loại hình, tài khoản sẽ chuyển về trạng thái
+  <strong>"Chờ xác thực"</strong> và quản trị viên sẽ duyệt lại.
+</div>

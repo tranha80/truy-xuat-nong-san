@@ -1,0 +1,29 @@
+<div class="row justify-content-center">
+  <div class="col-md-7">
+    <h2 class="mb-3"><i class="bi bi-search"></i> Tra cứu nguồn gốc</h2>
+    <form action="/tra-cuu" method="get" class="mb-4">
+      <div class="input-group input-group-lg">
+        <input type="text" name="ma" class="form-control" placeholder="Nhập mã lô sản phẩm" value="<%= code %>" />
+        <button class="btn btn-primary" type="submit">Tra cứu</button>
+      </div>
+    </form>
+
+    <% if (product) { %>
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title"><%= product.name %></h4>
+          <p class="text-muted">Mã lô: <strong><%= product.batch_code %></strong></p>
+          <a href="/san-pham/<%= product.id %>" class="btn btn-primary">
+            Xem toàn bộ thông tin & QR <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    <% } else if (code) { %>
+      <div class="alert alert-warning">Không tìm thấy sản phẩm với mã "<%= code %>".</div>
+    <% } else { %>
+      <div class="alert alert-info">
+        💡 Bạn có thể nhập mã lô in trên bao bì sản phẩm, hoặc quét mã QR trên sản phẩm bằng điện thoại.
+      </div>
+    <% } %>
+  </div>
+</div>

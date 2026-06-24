@@ -1,0 +1,112 @@
+<h2 class="mb-3"><%= product ? 'Sửa sản phẩm' : 'Tạo lô sản phẩm mới' %></h2>
+<form action="<%= action %>" method="post" enctype="multipart/form-data">
+  <% if (product) { %><input type="hidden" name="_method" value="PUT" /><% } %>
+
+  <div class="row g-3">
+    <div class="col-md-6">
+      <label class="form-label">Tên sản phẩm <span class="text-danger">*</span></label>
+      <input type="text" name="name" class="form-control" required value="<%= product?.name %>" />
+    </div>
+    <div class="col-md-3">
+      <label class="form-label">Mã lô</label>
+      <input type="text" name="batchCode" class="form-control" value="<%= product?.batch_code %>" placeholder="Để trống để tự sinh" <%= product ? 'readonly' : '' %> />
+    </div>
+    <div class="col-md-3">
+      <label class="form-label">Loại sản phẩm</label>
+      <select name="category" class="form-select">
+        <% ['Lúa gạo','Rau củ','Trái cây','Thủy hải sản','Thịt','Sữa','Gia vị','Khác'].forEach(function(c){ %>
+          <option <%= product?.category === c ? 'selected' : '' %>><%= c %></option>
+        <% }) %>
+      </select>
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label">Giống</label>
+      <input type="text" name="variety" class="form-control" value="<%= product?.variety %>" />
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">Ngày thu hoạch</label>
+      <input type="date" name="harvestDate" class="form-control" value="<%= product?.harvest_date %>" />
+    </div>
+    <div class="col-md-2">
+      <label class="form-label">Sản lượng</label>
+      <input type="number" step="any" name="quantity" class="form-control" value="<%= product?.quantity %>" />
+    </div>
+    <div class="col-md-2">
+      <label class="form-label">Đơn vị</label>
+      <input type="text" name="unit" class="form-control" value="<%= product?.unit || 'kg' %>" />
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Tên trang trại</label>
+      <input type="text" name="farmName" class="form-control" value="<%= product?.farm_name %>" />
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Địa chỉ trang trại</label>
+      <input type="text" name="farmAddress" class="form-control" value="<%= product?.farm_address %>" />
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label">Tỉnh/Thành</label>
+      <input type="text" name="province" class="form-control" value="<%= product?.province %>" />
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">Quận/Huyện</label>
+      <input type="text" name="district" class="form-control" value="<%= product?.district %>" />
+    </div>
+    <div class="col-md-2">
+      <label class="form-label">Vĩ độ</label>
+      <input type="text" name="latitude" class="form-control" value="<%= product?.latitude %>" />
+    </div>
+    <div class="col-md-2">
+      <label class="form-label">Kinh độ</label>
+      <input type="text" name="longitude" class="form-control" value="<%= product?.longitude %>" />
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Chứng nhận (phẩy ngăn cách)</label>
+      <input type="text" name="certifications" class="form-control" value="<%= product?.certifications %>" placeholder="VietGAP, GlobalGAP, Hữu cơ..." />
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Ảnh sản phẩm</label>
+      <input type="file" name="image" class="form-control" accept="image/*" />
+      <% if (product?.image) { %>
+        <img src="<%= product.image %>" class="mt-2" style="max-height:80px;border-radius:0.4rem" />
+      <% } %>
+    </div>
+
+    <div class="col-12">
+      <div class="alert alert-light border">
+        <h6 class="mb-2"><i class="bi bi-shield-check"></i> Thông tin định danh TTNS (Thông tư 31)</h6>
+        <div class="row g-2">
+          <div class="col-md-3">
+            <label class="form-label small">Mã GTIN</label>
+            <input type="text" name="gtinCode" class="form-control form-control-sm" value="<%= product?.gtin_code %>" placeholder="GTIN-13/14" />
+          </div>
+          <div class="col-md-3">
+            <label class="form-label small">Mã GLN (vị trí)</label>
+            <input type="text" name="glnCode" class="form-control form-control-sm" value="<%= product?.gln_code %>" />
+          </div>
+          <div class="col-md-3">
+            <label class="form-label small">Mã vùng trồng</label>
+            <input type="text" name="plantingAreaCode" class="form-control form-control-sm" value="<%= product?.planting_area_code %>" placeholder="Bộ NN&PTNT" />
+          </div>
+          <div class="col-md-3">
+            <label class="form-label small">Mã cơ sở</label>
+            <input type="text" name="facilityCode" class="form-control form-control-sm" value="<%= product?.facility_code %>" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <label class="form-label">Mô tả</label>
+      <textarea name="description" class="form-control" rows="3"><%= product?.description %></textarea>
+    </div>
+
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Lưu</button>
+      <a href="/nong-dan" class="btn btn-link">Hủy</a>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,48 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2><i class="bi bi-speedometer2"></i> Bảng điều khiển nông dân</h2>
+  <div>
+    <a href="/nong-dan/ho-so" class="btn btn-outline-secondary btn-sm"><i class="bi bi-person-vcard"></i> Hồ sơ thương nhân</a>
+    <a href="/nong-dan/tao-moi" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Tạo lô sản phẩm</a>
+  </div>
+</div>
+
+<% if (user.verification_status !== 'verified') { %>
+  <div class="alert alert-warning">
+    <i class="bi bi-exclamation-triangle"></i>
+    Tài khoản của bạn
+    <% if (user.verification_status === 'rejected') { %> <strong>bị từ chối xác thực</strong>
+    <% } else { %> <strong>chưa được xác thực</strong><% } %>.
+    Vui lòng cập nhật <a href="/nong-dan/ho-so">hồ sơ thương nhân</a> (mã số thuế, giấy phép) để được duyệt.
+    Chỉ tài khoản đã xác thực mới tạo được sản phẩm đăng ký TTNS.
+  </div>
+<% } %>
+
+<div class="table-responsive">
+  <table class="table table-hover align-middle">
+    <thead class="table-light">
+      <tr>
+        <th>Mã lô</th><th>Tên sản phẩm</th><th>Thu hoạch</th><th>Tỉnh</th><th>Sản lượng</th><th>Trạng thái</th><th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% const statusMap = {draft:['secondary','Bản nháp'], pending:['warning','Chờ duyệt'], approved:['success','Đã duyệt'], rejected:['danger','Từ chối'], hidden:['dark','Đã ẩn']}; %>
+      <% products.forEach(function(p){ %>
+        <% const [sColor, sLabel] = statusMap[p.status] || ['secondary', p.status]; %>
+        <tr>
+          <td><strong><%= p.batch_code %></strong></td>
+          <td><%= p.name %></td>
+          <td><%= p.harvest_date || '—' %></td>
+          <td><%= p.province || '—' %></td>
+          <td><%= p.quantity %> <%= p.unit %></td>
+          <td><span class="badge bg-<%= sColor %>"><%= sLabel %></span></td>
+          <td class="text-end">
+            <a href="/nong-dan/san-pham/<%= p.id %>" class="btn btn-sm btn-outline-primary">Chi tiết</a>
+          </td>
+        </tr>
+      <% }) %>
+      <% if (!products.length) { %>
+        <tr><td colspan="7" class="text-center text-muted py-4">Bạn chưa có lô sản phẩm nào.</td></tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>

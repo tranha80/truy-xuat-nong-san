@@ -1,0 +1,55 @@
+<section class="hero text-center">
+  <div class="container">
+    <h1>🌾 Truy xuất nguồn gốc nông sản</h1>
+    <p class="lead">Quét mã QR – biết ngay nguồn gốc, quy trình và chứng nhận của sản phẩm.</p>
+    <form class="row justify-content-center mt-3" action="/tra-cuu" method="get">
+      <div class="col-md-6 d-flex gap-2">
+        <input type="text" name="ma" class="form-control form-control-lg" placeholder="Nhập mã lô sản phẩm (vd: ST25-2026-001)" />
+        <button class="btn btn-light btn-lg" type="submit"><i class="bi bi-search"></i></button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section class="container mt-4">
+  <div class="row g-3 mb-4">
+    <div class="col-4">
+      <div class="card stat-card">
+        <div class="num"><%= stats.products %></div>
+        <div class="label">Lô sản phẩm</div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="card stat-card">
+        <div class="num"><%= stats.farmers %></div>
+        <div class="label">Nông dân tham gia</div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="card stat-card">
+        <div class="num"><%= stats.stages %></div>
+        <div class="label">Công đoạn ghi nhận</div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="mb-3">Sản phẩm mới nhất</h3>
+  <div class="row g-3">
+    <% recent.forEach(function(p){ %>
+      <div class="col-md-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title"><%= p.name %></h5>
+            <p class="text-muted mb-1"><i class="bi bi-tag"></i> Mã lô: <strong><%= p.batch_code %></strong></p>
+            <p class="text-muted mb-1"><i class="bi bi-geo-alt"></i> <%= p.province || '—' %></p>
+            <p class="mb-2"><i class="bi bi-person"></i> <%= p.farmer_name || '—' %></p>
+            <a href="/san-pham/<%= p.id %>" class="btn btn-primary btn-sm">Xem chi tiết</a>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+    <% if (!recent.length) { %>
+      <div class="col-12 text-center text-muted py-4">Chưa có sản phẩm nào.</div>
+    <% } %>
+  </div>
+</section>

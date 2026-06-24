@@ -1,0 +1,45 @@
+{
+  "name": "truy-xuat-nguon-goc-nong-san",
+  "version": "1.0.0",
+  "description": "Hệ thống truy xuất nguồn gốc nông sản mã nguồn mở cho nông dân Việt Nam",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "init-db": "node src/scripts/init-db.js",
+    "migrate": "node src/scripts/migrate-ttns.js",
+    "seed": "node src/scripts/seed.js"
+  },
+  "keywords": [
+    "truy-xuat-nguon-goc",
+    "nong-san",
+    "agriculture",
+    "traceability",
+    "vietnam",
+    "qr-code"
+  ],
+  "author": "Open Source Community",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.18.0",
+    "method-override": "^3.0.0",
+    "multer": "^1.4.5-lts.1",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
+    "qrcode": "^1.5.3",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,0 +1,86 @@
+<h2 class="mb-3"><i class="bi bi-people"></i> Quản lý người dùng & xác thực thương nhân</h2>
+
+<div class="card mb-4">
+  <div class="card-body">
+    <h5 class="card-title">➕ Tạo người dùng mới</h5>
+    <form action="/quan-tri/nguoi-dung" method="post">
+      <div class="row g-2">
+        <div class="col-md-2"><input type="text" name="fullName" class="form-control" placeholder="Họ tên" required /></div>
+        <div class="col-md-2"><input type="text" name="phone" class="form-control" placeholder="SĐT" /></div>
+        <div class="col-md-2"><input type="text" name="taxCode" class="form-control" placeholder="MST" /></div>
+        <div class="col-md-2"><input type="text" name="businessLicense" class="form-control" placeholder="Giấy phép KD" /></div>
+        <div class="col-md-1">
+          <select name="businessType" class="form-select">
+            <option value="production">Sản xuất</option>
+            <option value="processing">Chế biến</option>
+            <option value="trading">Kinh doanh</option>
+            <option value="import">Nhập khẩu</option>
+          </select>
+        </div>
+        <div class="col-md-1"><input type="text" name="username" class="form-control" placeholder="Tài khoản" required /></div>
+        <div class="col-md-1"><input type="password" name="password" class="form-control" placeholder="Mật khẩu" required /></div>
+        <div class="col-md-1">
+          <select name="role" class="form-select">
+            <option value="farmer">Nông dân</option>
+            <option value="admin">Quản trị</option>
+          </select>
+        </div>
+        <div class="col-12"><button class="btn btn-primary"><i class="bi bi-plus"></i> Thêm</button></div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<table class="table table-hover align-middle">
+  <thead class="table-light">
+    <tr>
+      <th>ID</th><th>Họ tên</th><th>Tài khoản</th><th>MST</th><th>Giấy phép</th><th>Loại hình</th><th>Xác thực</th><th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% const vMap = {verified:['success','Đã xác thực'], pending:['warning','Chờ'], rejected:['danger','Từ chối']}; %>
+    <% const tMap = {production:'Sản xuất', processing:'Chế biến', trading:'Kinh doanh', import:'Nhập khẩu'}; %>
+    <% users.forEach(function(u){ %>
+      <% const [vColor, vLabel] = vMap[u.verification_status] || ['secondary', u.verification_status]; %>
+      <tr>
+        <td><%= u.id %></td>
+        <td><%= u.full_name %></td>
+        <td><%= u.username %></td>
+        <td><small><%= u.tax_code || '—' %></small></td>
+        <td><small><%= u.business_license || '—' %></small></td>
+        <td><small><%= tMap[u.business_type] || u.business_type %></small></td>
+        <td><span class="badge bg-<%= vColor %>"><%= vLabel %></span></td>
+        <td>
+          <% if (u.role !== 'admin') { %>
+            <% if (u.verification_status !== 'verified') { %>
+              <form action="/quan-tri/nguoi-dung/<%= u.id %>/duyet" method="post" class="d-inline">
+                <input type="hidden" name="status" value="verified" />
+                <button class="btn btn-sm btn-success">Duyệt</button>
+              </form>
+            <% } %>
+            <% if (u.verification_status !== 'rejected') { %>
+              <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#reject-u<%= u.id %>">Từ chối</button>
+              <div class="modal fade" id="reject-u<%= u.id %>" tabindex="-1">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <form action="/quan-tri/nguoi-dung/<%= u.id %>/duyet" method="post">
+                      <div class="modal-header"><h5 class="modal-title">Từ chối xác thực</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+                      <div class="modal-body">
+                        <input type="hidden" name="status" value="rejected" />
+                        <label class="form-label">Lý do</label>
+                        <textarea name="reason" class="form-control" rows="3" required></textarea>
+                      </div>
+                      <div class="modal-footer"><button class="btn btn-danger">Xác nhận</button></div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            <% } %>
+          <% } else { %>
+            <span class="text-muted small">—</span>
+          <% } %>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>

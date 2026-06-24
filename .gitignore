@@ -1,0 +1,38 @@
+# Phụ thuộc
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Môi trường & bí mật
+.env
+.env.local
+.env.*.local
+
+# Cơ sở dữ liệu SQLite (file-based)
+data/*.db
+data/*.db-journal
+data/*.sqlite
+
+# Ảnh người dùng tải lên (không commit lên repo)
+public/uploads/*
+!public/uploads/.gitkeep
+
+# Logs
+logs/
+*.log
+
+# Hệ điều hành
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build
+dist/
+build/

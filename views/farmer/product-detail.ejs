@@ -1,0 +1,136 @@
+<% const statusMap = {draft:['secondary','Bản nháp'], pending:['warning','Chờ duyệt'], approved:['success','Đã duyệt'], rejected:['danger','Từ chối'], hidden:['dark','Đã ẩn']}; %>
+<% const [sColor, sLabel] = statusMap[product.status] || ['secondary', product.status]; %>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <div>
+    <h2 class="mb-0"><%= product.name %></h2>
+    <span class="badge bg-<%= sColor %>"><%= sLabel %></span>
+    <% if (product.ttns_registered_at) { %>
+      <span class="badge bg-info">Đã đăng ký TTNS</span>
+    <% } %>
+  </div>
+  <div>
+    <% if (['draft','rejected'].includes(product.status)) { %>
+      <a href="/nong-dan/san-pham/<%= product.id %>/sua" class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil"></i> Sửa</a>
+    <% } %>
+    <form action="/nong-dan/san-pham/<%= product.id %>?_method=DELETE" method="post" class="d-inline"
+          onsubmit="return confirm('Ẩn sản phẩm này? (Sẽ giữ lịch sử kiểm toán)')">
+      <button class="btn btn-outline-danger btn-sm"><i class="bi bi-eye-slash"></i> Ẩn</button>
+    </form>
+  </div>
+</div>
+
+<% if (product.status === 'rejected' && product.rejection_reason) { %>
+  <div class="alert alert-danger">
+    <strong>Lý do từ chối:</strong> <%= product.rejection_reason %>
+  </div>
+<% } %>
+
+<div class="row g-4">
+  <div class="col-md-7">
+    <div class="card mb-3">
+      <div class="card-body">
+        <p><strong>Mã lô:</strong> <%= product.batch_code %> · <strong>Giống:</strong> <%= product.variety || '—' %></p>
+        <p><strong>Thu hoạch:</strong> <%= product.harvest_date || '—' %> · <strong>Sản lượng:</strong> <%= product.quantity %> <%= product.unit %></p>
+        <p><strong>Trang trại:</strong> <%= product.farm_name %> — <%= product.farm_address %>, <%= product.district %>, <%= product.province %></p>
+        <% if (product.certifications) { %>
+          <p>
+            <% product.certifications.split(',').forEach(function(c){ %>
+              <span class="badge badge-cert"><%= c.trim() %></span>
+            <% }) %>
+          </p>
+        <% } %>
+
+        <hr>
+        <h6 class="text-muted">Thông tin định danh TTNS (Thông tư 31)</h6>
+        <p class="mb-1"><strong>GTIN:</strong> <%= product.gtin_code || '—' %></p>
+        <p class="mb-1"><strong>GLN:</strong> <%= product.gln_code || '—' %></p>
+        <p class="mb-1"><strong>Mã vùng trồng:</strong> <%= product.planting_area_code || '—' %></p>
+        <p class="mb-1"><strong>Mã cơ sở:</strong> <%= product.facility_code || '—' %></p>
+        <p class="mb-1"><strong>Thương nhân (MST):</strong> <%= product.farmer_tax_code || '—' %></p>
+
+        <% if (product.description) { %><hr><p><%= product.description %></p><% } %>
+      </div>
+    </div>
+
+    <h5><i class="bi bi-list-check"></i> Hành trình sản phẩm</h5>
+    <% if (product.stages && product.stages.length) { %>
+      <div class="timeline">
+        <% product.stages.forEach(function(s){ %>
+          <div class="timeline-item">
+            <h6><%= s.stage_name %></h6>
+            <div class="date"><%= s.performed_at || '' %> · <%= s.location || '' %></div>
+            <p class="mb-0"><%= s.description || '' %></p>
+          </div>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <p class="text-muted">Chưa có công đoạn nào.</p>
+    <% } %>
+
+    <div class="card mt-3">
+      <div class="card-body">
+        <h6 class="card-title">➕ Thêm công đoạn mới</h6>
+        <form action="/nong-dan/san-pham/<%= product.id %>/cong-doan" method="post" enctype="multipart/form-data">
+          <div class="row g-2">
+            <div class="col-md-5"><input type="text" name="stageName" class="form-control" placeholder="Tên công đoạn" required /></div>
+            <div class="col-md-3"><input type="date" name="performedAt" class="form-control" /></div>
+            <div class="col-md-4"><input type="text" name="location" class="form-control" placeholder="Địa điểm" /></div>
+            <div class="col-12"><textarea name="description" class="form-control" rows="2" placeholder="Mô tả"></textarea></div>
+            <div class="col-12"><input type="file" name="image" class="form-control" accept="image/*" /></div>
+            <div class="col-12"><button class="btn btn-primary btn-sm"><i class="bi bi-plus"></i> Thêm công đoạn</button></div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-5">
+    <div class="card mb-3">
+      <div class="card-body">
+        <h6 class="card-title"><i class="bi bi-diagram-3"></i> Quy trình xuất bản TTNS</h6>
+        <ol class="mb-3 small">
+          <li>Tạo sản phẩm (bản nháp) — <em>đã làm</em></li>
+          <li>Gửi duyệt → quản trị viên kiểm tra</li>
+          <li>Sau khi duyệt → đăng ký lên hệ thống TTNS quốc gia</li>
+          <li>Tải file JSON + in QR lên bao bì</li>
+        </ol>
+
+        <% if (['draft','rejected'].includes(product.status)) { %>
+          <form action="/nong-dan/san-pham/<%= product.id %>/gui-duyet" method="post"
+                onsubmit="return confirm('Gửi sản phẩm cho quản trị viên duyệt? Sau khi gửi sẽ không sửa được cho đến khi có kết quả.')">
+            <button class="btn btn-primary w-100 mb-2"><i class="bi bi-send"></i> Gửi duyệt</button>
+          </form>
+        <% } else if (product.status === 'pending') { %>
+          <div class="alert alert-warning small mb-0">Đang chờ quản trị viên duyệt...</div>
+        <% } else if (product.status === 'approved') { %>
+          <% if (!product.ttns_registered_at) { %>
+            <form action="/nong-dan/san-pham/<%= product.id %>/dang-ky-ttns" method="post">
+              <button class="btn btn-success w-100 mb-2"><i class="bi bi-cloud-upload"></i> Đánh dấu đã đăng ký TTNS quốc gia</button>
+            </form>
+          <% } %>
+          <a href="/api/export/<%= product.id %>" class="btn btn-outline-primary w-100 mb-2">
+            <i class="bi bi-file-earmark-code"></i> Tải JSON (nhập lên hệ thống Bộ Công Thương)
+          </a>
+          <a href="/san-pham/<%= product.id %>" class="btn btn-outline-secondary w-100" target="_blank">
+            <i class="bi bi-eye"></i> Xem trang công khai
+          </a>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <h6><i class="bi bi-qr-code"></i> Mã QR truy xuất</h6>
+      <div class="qr-box">
+        <img src="<%= qrDataUrl %>" width="220" height="220" alt="QR" />
+      </div>
+      <p class="text-muted small mt-2"><%= traceUrl %></p>
+      <a class="btn btn-outline-primary btn-sm" href="<%= qrDataUrl %>" download="qr-<%= product.batch_code %>.png">
+        <i class="bi bi-download"></i> Tải QR
+      </a>
+      <% if (product.status !== 'approved') { %>
+        <p class="text-muted small mt-2"><i class="bi bi-info-circle"></i> QR chỉ có hiệu lực khi sản phẩm đã được duyệt.</p>
+      <% } %>
+    </div>
+  </div>
+</div>
