@@ -146,4 +146,3 @@ Vui lòng liên hệ tác giả để mua license thương mại:
 - Email: **tranha80@gmail.com**
 
 Chi tiết đầy đủ xem tại [`LICENSE`](LICENSE).
-# Test push với GCM - Wed, Jun 24, 2026  2:12:07 PM
