@@ -1,6 +1,8 @@
 # 🌾 Truy xuất nguồn gốc nông sản
 
-Hệ thống **mã nguồn mở** giúp nông dân Việt Nam ghi nhận và chia sẻ thông tin nguồn gốc, quy trình sản xuất, chứng nhận của nông sản bằng **mã QR**. Người tiêu dùng chỉ cần quét QR trên bao bì là xem được toàn bộ "hành trình" của sản phẩm.
+> ⚠️ **Giấy phép**: Sử dụng cá nhân/nội bộ **miễn phí**. Sử dụng **thương mại cần mua license** — liên hệ tác giả (tranha80@gmail.com). Xem [`LICENSE`](LICENSE).
+
+Hệ thống giúp nông dân Việt Nam ghi nhận và chia sẻ thông tin nguồn gốc, quy trình sản xuất, chứng nhận của nông sản bằng **mã QR**. Người tiêu dùng chỉ cần quét QR trên bao bì là xem được toàn bộ "hành trình" của sản phẩm.
 
 > Phù hợp với hợp tác xã, trang trại nhỏ, nhóm nông dân, cửa hàng nông sản sạch.
 
@@ -129,6 +131,18 @@ Hệ thống dùng SQLite nên phù hợp với các nền tảng có **persiste
 
 PR và issue đều hoan nghênh. Đây là dự án cộng đồng vì nền nông nghiệp Việt Nam.
 
+> Lưu ý: đóng góp mã nguồn (PR) không đồng nghĩa với việc chuyển nhượng bản quyền.
+>Bản quyền phần mềm vẫn thuộc về tác giả. Xem mục Giấy phép bên dưới.
+
 ## 📜 Giấy phép
 
-MIT — dùng tự do, kể cả thương mại. Xem [`LICENSE`](LICENSE).
+**Sử dụng cá nhân / nội bộ: MIỄN PHÍ** — được cài đặt, chạy, sửa đổi cho mục đích riêng.
+
+**Sử dụng thương mại: CẦN MUA LICENSE** — bao gồm bán, SaaS, tích hợp vào sản phẩm thương mại, phân phối lại.
+
+Vui lòng liên hệ tác giả để mua license thương mại:
+
+- Tác giả: **Tranha80**
+- Email: **tranha80@gmail.com**
+
+Chi tiết đầy đủ xem tại [`LICENSE`](LICENSE).

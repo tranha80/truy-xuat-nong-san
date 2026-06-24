@@ -1,21 +1,46 @@
-MIT License
+Copyright (c) 2026 Tranha80 (tranha80@gmail.com)
 
-Copyright (c) 2026 Open Source Community
+Giấy phép này cấp quyền sử dụng phần mềm "Hệ thống truy xuất nguồn gốc
+nông sản" (sau đây gọi là "Phần mềm") theo các điều khoản sau.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+ĐỊNH NGHĨA:
+- "Sử dụng cá nhân / nội bộ" là việc sử dụng Phần mềm cho mục đích cá nhân,
+  học tập, nghiên cứu, hoặc vận hành nội bộ tại một tổ chức/hộ kinh doanh
+  của chính người sử dụng — KHÔNG bao gồm việc bán, cho thuê, sublicen,
+  phân phối lại, hoặc tích hợp vào sản phẩm/dịch vụ thương mại.
+- "Sử dụng thương mại" là mọi hình thức khai thác Phần mềm nhằm mục đích
+  sinh lời, bao gồm nhưng không giới hạn: bán phần mềm, bán dịch vụ chạy
+  trên phần mềm, tích hợp vào sản phẩm thương mại, SaaS, hoặc phân phối lại
+  (có tính phí hoặc không).
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+QUYỀN ĐƯỢC CẤP (SỬ DỤNG CÁ NHÂN / NỘI BỘ):
+1. Được cài đặt, chạy, và sử dụng Phần mềm cho mục đích cá nhân hoặc nội bộ.
+2. Được đọc, học tập, và tham khảo mã nguồn.
+3. Được sửa đổi mã nguồn cho mục đích sử dụng nội bộ của riêng mình,
+   nhưng KHÔNG được phân phối bản sửa đổi cho bên thứ ba.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+HẠN CHẾ (KHÔNG ĐƯỢC PHÉP TRỪ KHI CÓ LICENSE THƯƠNG MẠI):
+1. KHÔNG được bán, cho thuê, sublicen, hoặc phân phối lại Phần mềm
+   (nguyên bản hoặc đã sửa đổi) dưới bất kỳ hình thức nào.
+2. KHÔNG được tích hợp Phần mềm vào sản phẩm hoặc dịch vụ thương mại.
+3. KHÔNG được sử dụng Phần mềm làm nền tảng cho dịch vụ SaaS trả phí
+   hoặc dịch vụ lưu trữ/kinh doanh cho bên thứ ba.
+4. KHÔNG được gỡ bỏ hoặc sửa đổi thông báo bản quyền/giấy phép này.
+
+SỬ DỤNG THƯƠNG MẠI:
+Mọi hình thức sử dụng thương mại (như định nghĩa ở trên) yêu cầu phải có
+giấy phép thương mại do tác giả cấp. Vui lòng liên hệ tác giả để mua
+license thương mại trước khi sử dụng cho mục đích thương mại.
+
+  Tác giả:    Tranha80
+  Email:      tranha80@gmail.com
+
+Việc sử dụng Phần mềm cho mục đích thương mại mà không có license thương
+mại là vi phạm bản quyền và có thể bị truy cứu trách nhiệm pháp lý.
+
+KHÔNG BẢO HÀNH:
+PHẦN MỀM ĐƯỢC CUNG CẤP "NHƯ LÀ", KHÔNG CÓ BẢO HÀNH DƯỚI BẤT KỲ HÌNH THỨC
+NÀO, RÕ RÀNG HOẶC NGẤ Ý, BAO GỒM NHƯNG KHÔNG GIỚI HẠN CÁC BẢO HÀNH VỀ
+TÍNH THƯƠNG MẠI, SỰ PHÙ HỢP CHO MỘT MỤC ĐÍCH CỤ THỂ, VÀ KHÔNG VI PHẠM.
+TÁC GIẢ KHÔNG CHỊU TRÁCH NHIỆM VỀ BẤT KỲ THIỆT HẠI NÀO PHÁT SINH TỪ VIỆC
+SỬ DỤNG PHẦN MỀM.

@@ -18,8 +18,9 @@
     "vietnam",
     "qr-code"
   ],
-  "author": "Open Source Community",
-  "license": "MIT",
+  "author": "Tranha80 (tranha80@gmail.com)",
+  "license": "SEE LICENSE IN LICENSE",
+  "license-summary": "Sử dụng cá nhân/nội bộ miễn phí; thương mại cần mua license — liên hệ tác giả",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "connect-flash": "^0.1.1",
